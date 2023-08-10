@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meals/constants/colors.dart';
-import 'package:meals/data/meal_data.dart';
 import 'package:meals/provider/favourites_provider.dart';
 import 'package:meals/screens/home_screen.dart';
 import 'package:meals/screens/meals_list_screen.dart';
@@ -43,24 +42,7 @@ class _TabsState extends ConsumerState<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedFilters = ref.watch(filtersProvider);
-    final availableMeals = dummyMeals.where((meal) {
-      {
-        if (selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
-          return false;
-        }
-        if (selectedFilters[Filter.lactosFree]! && !meal.isGlutenFree) {
-          return false;
-        }
-        if (selectedFilters[Filter.vegan]! && !meal.isVegan) {
-          return false;
-        }
-        if (selectedFilters[Filter.vegetarian]! && !meal.isVegetarian) {
-          return false;
-        }
-        return true;
-      }
-    }).toList();
+    final availableMeals = ref.watch(fliteredMealsListProvider);
 
     Widget activeScreen = HomeScreen(
       filterdMealList: availableMeals,
