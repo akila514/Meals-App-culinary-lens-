@@ -6,15 +6,14 @@ import 'package:meals/screens/description_screen.dart';
 import '../model/meal.dart';
 
 class NewMeals extends StatelessWidget {
-  const NewMeals({super.key, required this.toggleFavouriteButton});
-  final void Function(Meal meal) toggleFavouriteButton;
+  const NewMeals({super.key,});
 
   void onNewMeadClick(BuildContext context, Meal meal) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DescriptonScreen(
-            meal: meal, toggleFavouriteButton: toggleFavouriteButton),
+            meal: meal, ),
       ),
     );
   }

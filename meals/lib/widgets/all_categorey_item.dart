@@ -7,9 +7,8 @@ class AllCategoreyItem extends StatelessWidget {
   const AllCategoreyItem(
       {super.key,
       required this.filterdMealList,
-      required this.toggleFavouriteButton});
+    });
   final List<Meal>? filterdMealList;
-  final void Function(Meal meal) toggleFavouriteButton;
 
   void navigateToAllMeals(BuildContext context) {
     Navigator.push(
@@ -17,7 +16,7 @@ class AllCategoreyItem extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => AllMeals(
               filteredList: filterdMealList!,
-              toggleFavouriteButton: toggleFavouriteButton),
+             ),
         ));
   }
 

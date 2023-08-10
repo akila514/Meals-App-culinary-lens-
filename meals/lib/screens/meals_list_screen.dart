@@ -8,11 +8,9 @@ class MealsListScreen extends StatelessWidget {
       {super.key,
       this.foodCategory,
       required this.filteredList,
-      required this.toggleFavouriteButton,
       required this.filteredMeals});
   final String? foodCategory;
   final List<Meal> filteredList;
-  final void Function(Meal meal) toggleFavouriteButton;
   final List<Meal> filteredMeals;
 
   @override
@@ -40,7 +38,7 @@ class MealsListScreen extends StatelessWidget {
             itemCount: filteredMealsList.length,
             itemBuilder: (context, index) => MealItem(
               meal: filteredMealsList[index],
-              toggleFavouriteButton: toggleFavouriteButton,
+             
             ),
           );
 

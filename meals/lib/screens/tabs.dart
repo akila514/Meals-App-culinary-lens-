@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meals/constants/colors.dart';
 import 'package:meals/data/meal_data.dart';
-import 'package:meals/model/meal.dart';
 import 'package:meals/provider/favourites_provider.dart';
 import 'package:meals/screens/home_screen.dart';
 import 'package:meals/screens/meals_list_screen.dart';
@@ -28,59 +27,10 @@ class Tabs extends ConsumerStatefulWidget {
 
 class _TabsState extends ConsumerState<Tabs> {
   Map<Filter, bool> selectedFilters = kInitialFilter;
-  final List<Meal> favouriteList = [];
   int selectedPageIndex = 0;
   var activeScreenTitle = 'Culinary Lense';
 
-  void _toggleFavouriteButton(Meal meal) {
-    int index = favouriteList.indexOf(meal);
 
-    if (favouriteList.contains(meal)) {
-      setState(() {
-        favouriteList.remove(meal);
-      });
-      _showSnackbarForRemovingFromFavourites(meal, index);
-    } else {
-      setState(() {
-        favouriteList.add(meal);
-      });
-      _showSnackbarForAddingToFavourites(meal);
-    }
-  }
-
-  void _showSnackbarForAddingToFavourites(Meal meal) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${meal.title} added to Favourists'),
-        action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () {
-              setState(() {
-                favouriteList.remove(meal);
-              });
-            }),
-      ),
-    );
-  }
-
-  void _showSnackbarForRemovingFromFavourites(Meal meal, int index) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${meal.title} removed from Favourists'),
-        action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () {
-              setState(() {
-                favouriteList.insert(index, meal);
-              });
-            }),
-      ),
-    );
-  }
 
   void _selectScreen(int index) {
     setState(() {
@@ -125,15 +75,13 @@ class _TabsState extends ConsumerState<Tabs> {
 
     Widget activeScreen = HomeScreen(
       filterdMealList: availableMeals,
-      toggleFavouriteButton: _toggleFavouriteButton,
     );
 
     if (selectedPageIndex == 1) {
-      // final favouriteList = ref.watch(favouritsMealProvider);
+      final favouriteList = ref.watch(favouritsMealProvider);
       activeScreen = MealsListScreen(
         filteredMeals: availableMeals,
         filteredList: favouriteList,
-        toggleFavouriteButton: _toggleFavouriteButton,
       );
       activeScreenTitle = 'Favourites';
     }
@@ -141,7 +89,6 @@ class _TabsState extends ConsumerState<Tabs> {
     if (selectedPageIndex == 0) {
       activeScreen = HomeScreen(
         filterdMealList: availableMeals,
-        toggleFavouriteButton: _toggleFavouriteButton,
       );
       activeScreenTitle = 'Culinary Lense';
     }

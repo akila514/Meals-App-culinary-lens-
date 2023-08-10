@@ -9,8 +9,7 @@ import '../model/meal.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen(
-      {super.key, required this.toggleFavouriteButton, this.filterdMealList});
-  final void Function(Meal meal) toggleFavouriteButton;
+      {super.key, this.filterdMealList});
   final List<Meal>? filterdMealList;
 
   @override
@@ -19,7 +18,7 @@ class HomeScreen extends StatelessWidget {
       child: Expanded(
         child: Column(
           children: [
-            NewMeals(toggleFavouriteButton: toggleFavouriteButton),
+            NewMeals(),
             const Padding(
               padding: EdgeInsets.only(left: 20, top: 40, bottom: 10),
               child: Align(
@@ -48,7 +47,7 @@ class HomeScreen extends StatelessWidget {
             ),
             AllCategoreyItem(
                 filterdMealList: filterdMealList ?? dummyMeals,
-                toggleFavouriteButton: toggleFavouriteButton),
+               ),
             const SizedBox(
               height: 5,
             ),
@@ -67,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                     CategoreyItem(
                       filteredMeals: filterdMealList,
                       category: categorey,
-                      toggleFavouriteButton: toggleFavouriteButton,
+                   
                     )
                 ],
               ),

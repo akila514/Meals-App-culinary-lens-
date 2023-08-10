@@ -2,23 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:meals/screens/home_screen.dart';
 
 import '../constants/colors.dart';
-import '../model/meal.dart';
 
 class CustomizedBottomAppbar extends StatelessWidget {
-  const CustomizedBottomAppbar(
-      {super.key,
-      required this.activeScreen,
-      required this.toggleFavouriteButton});
+  const CustomizedBottomAppbar({
+    super.key,
+    required this.activeScreen,
+  });
   final String activeScreen;
-  final void Function(Meal meal) toggleFavouriteButton;
 
   void navigateToHome(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(
-            toggleFavouriteButton: toggleFavouriteButton,
-          ),
+          builder: (context) => const HomeScreen(),
         ));
   }
 

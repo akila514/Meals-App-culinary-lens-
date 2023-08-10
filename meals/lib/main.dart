@@ -7,12 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true)
-          .copyWith(textTheme: GoogleFonts.poppinsTextTheme()),
-      home: const ProviderScope(child: App()),
-    ),
+    const ProviderScope(child: App()),
   );
 }
 
@@ -21,10 +16,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(color: backgroundColor),
-        child: const WelcomeScreen(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: true)
+          .copyWith(textTheme: GoogleFonts.poppinsTextTheme()),
+      home: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(color: backgroundColor),
+          child: const WelcomeScreen(),
+        ),
       ),
     );
   }

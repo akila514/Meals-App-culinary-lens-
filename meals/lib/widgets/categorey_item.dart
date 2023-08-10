@@ -10,11 +10,10 @@ class CategoreyItem extends StatelessWidget {
   const CategoreyItem(
       {super.key,
       required this.category,
-      required this.toggleFavouriteButton,
+     
       this.filteredMeals});
 
   final FoodCategory category;
-  final void Function(Meal meal) toggleFavouriteButton;
   final List<Meal>? filteredMeals;
 
   void navigateToDescriptionScreen(BuildContext context) {
@@ -25,7 +24,6 @@ class CategoreyItem extends StatelessWidget {
           filteredMeals: filteredMeals ?? dummyMeals,
           foodCategory: category.title,
           filteredList: dummyMeals,
-          toggleFavouriteButton: toggleFavouriteButton,
         ),
       ),
     );

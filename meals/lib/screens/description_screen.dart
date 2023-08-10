@@ -1,37 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/constants/colors.dart';
 import 'package:meals/model/meal.dart';
+import 'package:meals/provider/favourites_provider.dart';
 import 'package:meals/widgets/detail_box_row.dart';
 import 'package:meals/widgets/large_customized_text.dart';
 
-class DescriptonScreen extends StatefulWidget {
-  const DescriptonScreen(
-      {super.key, required this.meal, required this.toggleFavouriteButton});
+class DescriptonScreen extends ConsumerWidget {
+  const DescriptonScreen({
+    super.key,
+    required this.meal,
+  });
 
-  final void Function(Meal meal) toggleFavouriteButton;
   final Meal meal;
 
-  @override
-  State<StatefulWidget> createState() {
-    return _DescriptionScreen();
+  void _showSnackbarForAddingToFavourites(Meal meal, BuildContext context) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${meal.title} added to Favourists'),
+      ),
+    );
   }
-}
 
-class _DescriptionScreen extends State<DescriptonScreen> {
-  void _toggleFavouriteButton(Meal meal) {
-    widget.toggleFavouriteButton(meal);
+  void _showSnackbarForRemovingFromFavourites(Meal meal, BuildContext context) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${meal.title} removed from Favourists'),
+      ),
+    );
   }
 
-  bool isAddedToFavourites = false;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
         title: Text(
-          widget.meal.title,
+          meal.title,
           style: const TextStyle(color: primaryFontColor),
         ),
       ),
@@ -40,7 +50,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              widget.meal.imageUrl,
+              meal.imageUrl,
               width: double.infinity,
               height: 250,
               fit: BoxFit.fill,
@@ -51,13 +61,13 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                           backgroundColor: Colors.white),
             ),
             LargeCustomizedText(
-              text: widget.meal.title,
+              text: meal.title,
               fontsize: 24,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 10),
               child: Text(
-                widget.meal.description,
+                meal.description,
                 style: const TextStyle(fontSize: 16, color: regularTextColor),
               ),
             ),
@@ -71,21 +81,18 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        isAddedToFavourites =
-                            isAddedToFavourites ? false : true;
-                      });
-                      _toggleFavouriteButton(widget.meal);
+                      final wasAdded = ref
+                          .read(favouritsMealProvider.notifier)
+                          .toggleMealFavouriteStatus(meal);
+                      wasAdded
+                          ? _showSnackbarForAddingToFavourites(meal, context)
+                          : _showSnackbarForRemovingFromFavourites(
+                              meal, context);
                     },
-                    icon: isAddedToFavourites
-                        ? const Icon(
-                            Icons.star,
-                            color: Color(0XFFf39c12),
-                          )
-                        : const Icon(
-                            Icons.star_outline,
-                            color: Color(0XFFf39c12),
-                          ),
+                    icon: const Icon(
+                      Icons.star,
+                      color: Color(0XFFf39c12),
+                    ),
                   ),
                   const Text(
                     'Add to Favourites.',
@@ -102,7 +109,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: DetailBoxRow(meal: widget.meal),
+              child: DetailBoxRow(meal: meal),
             ),
             const SizedBox(
               height: 10,
@@ -126,7 +133,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                     children: [
                       Icon(
                         Icons.circle,
-                        color: widget.meal.isVegan
+                        color: meal.isVegan
                             ? const Color(0XFF2ecc71)
                             : const Color(0XFFe74c3c),
                         size: 15,
@@ -136,7 +143,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.meal.isVegan ? 'Vegan' : 'None Vegan',
+                          meal.isVegan ? 'Vegan' : 'None Vegan',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                               fontSize: 16,
@@ -153,7 +160,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                     children: [
                       Icon(
                         Icons.circle,
-                        color: widget.meal.isGlutenFree
+                        color: meal.isGlutenFree
                             ? const Color(0XFF2ecc71)
                             : const Color(0XFFe74c3c),
                         size: 15,
@@ -163,9 +170,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.meal.isGlutenFree
-                              ? 'GlutenFree'
-                              : 'Not Gluten Free',
+                          meal.isGlutenFree ? 'GlutenFree' : 'Not Gluten Free',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                               fontSize: 16,
@@ -182,7 +187,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                     children: [
                       Icon(
                         Icons.circle,
-                        color: widget.meal.isLactoseFree
+                        color: meal.isLactoseFree
                             ? const Color(0XFF2ecc71)
                             : const Color(0XFFe74c3c),
                         size: 15,
@@ -192,7 +197,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.meal.isLactoseFree
+                          meal.isLactoseFree
                               ? 'Lactos Free'
                               : 'Not Lactos Free',
                           textAlign: TextAlign.start,
@@ -211,7 +216,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                     children: [
                       Icon(
                         Icons.circle,
-                        color: widget.meal.isVegetarian
+                        color: meal.isVegetarian
                             ? const Color(0XFF2ecc71)
                             : const Color(0XFFe74c3c),
                         size: 15,
@@ -221,9 +226,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.meal.isVegetarian
-                              ? 'Vegetarian'
-                              : 'Not Vegetarian',
+                          meal.isVegetarian ? 'Vegetarian' : 'Not Vegetarian',
                           textAlign: TextAlign.start,
                           style: const TextStyle(
                               fontSize: 16,
@@ -250,7 +253,7 @@ class _DescriptionScreen extends State<DescriptonScreen> {
             const SizedBox(
               height: 20,
             ),
-            for (String item in widget.meal.ingredients)
+            for (String item in meal.ingredients)
               Padding(
                 padding: const EdgeInsets.only(
                     left: 34, bottom: 5, top: 10, right: 20),
@@ -280,13 +283,13 @@ class _DescriptionScreen extends State<DescriptonScreen> {
               height: 10,
             ),
             LargeCustomizedText(
-              text: 'Steps to cook ${widget.meal.title}',
+              text: 'Steps to cook ${meal.title}',
               fontsize: 20,
             ),
             const SizedBox(
               height: 20,
             ),
-            for (String step in widget.meal.steps)
+            for (String step in meal.steps)
               Padding(
                 padding: const EdgeInsets.only(
                     left: 34, bottom: 5, top: 10, right: 20),

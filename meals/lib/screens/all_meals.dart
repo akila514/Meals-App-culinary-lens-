@@ -7,9 +7,8 @@ class AllMeals extends StatelessWidget {
   const AllMeals(
       {super.key,
       required this.filteredList,
-      required this.toggleFavouriteButton});
+    });
   final List<Meal> filteredList;
-  final void Function(Meal meal) toggleFavouriteButton;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class AllMeals extends StatelessWidget {
               itemCount: filteredList.length,
               itemBuilder: (context, index) => MealItem(
                   meal: filteredList[index],
-                  toggleFavouriteButton: toggleFavouriteButton),
+                 ),
             ),
           )
         ],
