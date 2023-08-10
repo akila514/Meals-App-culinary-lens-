@@ -80,20 +80,19 @@ class DescriptonScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   IconButton(
-                    onPressed: () {
-                      final wasAdded = ref
-                          .read(favouritsMealProvider.notifier)
-                          .toggleMealFavouriteStatus(meal);
-                      wasAdded
-                          ? _showSnackbarForAddingToFavourites(meal, context)
-                          : _showSnackbarForRemovingFromFavourites(
-                              meal, context);
-                    },
-                    icon: const Icon(
-                      Icons.star,
-                      color: Color(0XFFf39c12),
-                    ),
-                  ),
+                      onPressed: () {
+                        final wasAdded = ref
+                            .read(favouritsMealProvider.notifier)
+                            .toggleMealFavouriteStatus(meal);
+                        wasAdded
+                            ? _showSnackbarForAddingToFavourites(meal, context)
+                            : _showSnackbarForRemovingFromFavourites(
+                                meal, context);
+                      },
+                      icon: ref.watch(favouritsMealProvider).contains(meal)
+                          ? const Icon(Icons.star, color: Color(0XFFf39c12))
+                          : const Icon(Icons.star_outline,
+                              color: Color(0XFFf39c12))),
                   const Text(
                     'Add to Favourites.',
                     style: TextStyle(color: regularTextColor, fontSize: 16),
