@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:meals/constants/colors.dart';
 import 'package:meals/data/meal_data.dart';
 import 'package:meals/screens/description_screen.dart';
-
 import '../model/meal.dart';
 
 class NewMeals extends StatelessWidget {

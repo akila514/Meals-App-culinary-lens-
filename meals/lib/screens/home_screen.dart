@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:meals/constants/colors.dart';
 import 'package:meals/data/meal_data.dart';
 import 'package:meals/widgets/all_categorey_item.dart';
 import 'package:meals/widgets/categorey_item.dart';
 import 'package:meals/widgets/new_meals.dart';
-
 import '../model/meal.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen(
       {super.key, this.filterdMealList});
+      
   final List<Meal>? filterdMealList;
 
   @override
@@ -18,7 +19,7 @@ class HomeScreen extends StatelessWidget {
       child: Expanded(
         child: Column(
           children: [
-            NewMeals(),
+            const NewMeals(),
             const Padding(
               padding: EdgeInsets.only(left: 20, top: 40, bottom: 10),
               child: Align(

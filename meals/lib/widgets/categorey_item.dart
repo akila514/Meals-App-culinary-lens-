@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:meals/constants/colors.dart';
 import 'package:meals/data/meal_data.dart';
 import 'package:meals/model/meal_categorey.dart';
 import 'package:meals/screens/meals_list_screen.dart';
-
 import '../model/meal.dart';
 
 class CategoreyItem extends StatelessWidget {
-  const CategoreyItem(
-      {super.key,
-      required this.category,
-     
-      this.filteredMeals});
+  const CategoreyItem({super.key, required this.category, this.filteredMeals});
 
   final FoodCategory category;
   final List<Meal>? filteredMeals;

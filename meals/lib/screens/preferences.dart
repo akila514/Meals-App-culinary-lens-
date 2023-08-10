@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meals/constants/colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:meals/constants/colors.dart';
 import 'package:meals/provider/filters_provider.dart';
 
 class Preferences extends ConsumerWidget {

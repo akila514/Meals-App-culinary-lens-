@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:meals/model/meal.dart';
 import 'detail_box.dart';
 
@@ -7,6 +8,7 @@ class DetailBoxRow extends StatelessWidget {
       {super.key, required this.meal});
 
   final Meal meal;
+  
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meals/constants/colors.dart';
-import 'package:meals/screens/welcome_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:meals/screens/welcome_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:meals/constants/colors.dart';
 import 'package:meals/model/meal.dart';
 import 'package:meals/widgets/detail_box_row.dart';
-
 import '../screens/description_screen.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem(
-      {super.key, required this.meal,});
+  const MealItem({
+    super.key,
+    required this.meal,
+  });
+  
   final Meal meal;
 
   void navigateToDescriptionScreen(BuildContext context) {
@@ -15,7 +18,8 @@ class MealItem extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => DescriptonScreen(
-            meal: meal,),
+          meal: meal,
+        ),
       ),
     );
   }

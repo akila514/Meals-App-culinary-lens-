@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meals/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:meals/constants/colors.dart';
 import 'package:meals/screens/tabs.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -8,10 +9,11 @@ class WelcomeScreen extends StatelessWidget {
 
   void navigateToHomeScreen(BuildContext context) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const Tabs(),
-        ));
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Tabs(),
+      ),
+    );
   }
 
   @override

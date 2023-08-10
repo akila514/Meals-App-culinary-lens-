@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:meals/constants/colors.dart';
 import 'package:meals/model/meal.dart';
 import 'package:meals/provider/favourites_provider.dart';
@@ -59,8 +60,7 @@ class DescriptonScreen extends ConsumerWidget {
               loadingBuilder: (context, child, loadingProgress) =>
                   loadingProgress == null
                       ? child
-                      : const LinearProgressIndicator(
-                          backgroundColor: Colors.white),
+                      : const LinearProgressIndicator(),
             ),
             LargeCustomizedText(
               text: meal.title,
@@ -91,10 +91,22 @@ class DescriptonScreen extends ConsumerWidget {
                             : _showSnackbarForRemovingFromFavourites(
                                 meal, context);
                       },
-                      icon: isFavourite
-                          ? const Icon(Icons.star, color: Color(0XFFf39c12))
-                          : const Icon(Icons.star_outline,
-                              color: Color(0XFFf39c12))),
+                      icon: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: Icon(
+                          isFavourite ? Icons.star : Icons.star_outline,
+                          color: const Color(0XFFf39c12),
+                          key: ValueKey(
+                              isFavourite), // This key should trigger the switch
+                        ),
+                        // This transitionBuilder specifies a rotation animation
+                        transitionBuilder: (child, animation) {
+                          return RotationTransition(
+                              turns: Tween(begin: 0.7, end: 1.0)
+                                  .animate(animation),
+                              child: child);
+                        },
+                      )),
                   isFavourite
                       ? const Text(
                           'Already in Favourites.',

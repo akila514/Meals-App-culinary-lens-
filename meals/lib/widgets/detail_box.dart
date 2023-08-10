@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:meals/constants/colors.dart';
 
 class DetailBox extends StatelessWidget {
   const DetailBox({super.key, required this.tile, required this.type});
+
   final String tile;
   final String type;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:meals/constants/colors.dart';
 
 class LargeCustomizedText extends StatelessWidget {

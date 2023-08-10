@@ -8,6 +8,7 @@ class CustomizedBottomAppbar extends StatelessWidget {
     super.key,
     required this.activeScreen,
   });
+  
   final String activeScreen;
 
   void navigateToHome(BuildContext context) {
