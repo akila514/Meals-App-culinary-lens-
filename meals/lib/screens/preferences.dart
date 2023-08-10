@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:meals/constants/colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/provider/filters_provider.dart';
 
-class Preferences extends StatefulWidget {
-  const Preferences({super.key, required this.activeFilters});
-  final Map<Filter, bool> activeFilters;
-
+class Preferences extends ConsumerStatefulWidget {
+  const Preferences({super.key});
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return _PreferencesState();
   }
 }
 
-enum Filter {
-  glutenFree,
-  vegan,
-  lactosFree,
-  vegetarian,
-}
-
-class _PreferencesState extends State<Preferences> {
+class _PreferencesState extends ConsumerState<Preferences> {
   var _isGlutenFree = false;
   var _isVegan = false;
   var _isLactosFree = false;
@@ -26,10 +19,12 @@ class _PreferencesState extends State<Preferences> {
 
   @override
   void initState() {
-    _isGlutenFree = widget.activeFilters[Filter.glutenFree]!;
-    _isVegan = widget.activeFilters[Filter.vegan]!;
-    _isLactosFree = widget.activeFilters[Filter.lactosFree]!;
-    _isVegetarian = widget.activeFilters[Filter.vegetarian]!;
+    final activeFilters = ref.read(filtersProvider);
+
+    _isGlutenFree = activeFilters[Filter.glutenFree]!;
+    _isVegan = activeFilters[Filter.vegan]!;
+    _isLactosFree = activeFilters[Filter.lactosFree]!;
+    _isVegetarian = activeFilters[Filter.vegetarian]!;
 
     super.initState();
   }
@@ -44,13 +39,13 @@ class _PreferencesState extends State<Preferences> {
       ),
       body: WillPopScope(
         onWillPop: () async {
-          Navigator.of(context).pop({
+          ref.read(filtersProvider.notifier).setFilters({
             Filter.glutenFree: _isGlutenFree,
             Filter.vegan: _isVegan,
             Filter.lactosFree: _isLactosFree,
             Filter.vegetarian: _isVegetarian,
           });
-          return false;
+          return true;
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

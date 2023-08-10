@@ -7,14 +7,8 @@ import 'package:meals/provider/favourites_provider.dart';
 import 'package:meals/screens/home_screen.dart';
 import 'package:meals/screens/meals_list_screen.dart';
 import 'package:meals/screens/preferences.dart';
+import '../provider/filters_provider.dart';
 import '../widgets/custom_drawer.dart';
-
-final kInitialFilter = {
-  Filter.glutenFree: false,
-  Filter.vegan: false,
-  Filter.lactosFree: false,
-  Filter.vegetarian: false,
-};
 
 class Tabs extends ConsumerStatefulWidget {
   const Tabs({super.key});
@@ -26,11 +20,8 @@ class Tabs extends ConsumerStatefulWidget {
 }
 
 class _TabsState extends ConsumerState<Tabs> {
-  Map<Filter, bool> selectedFilters = kInitialFilter;
   int selectedPageIndex = 0;
   var activeScreenTitle = 'Culinary Lense';
-
-
 
   void _selectScreen(int index) {
     setState(() {
@@ -38,23 +29,21 @@ class _TabsState extends ConsumerState<Tabs> {
     });
   }
 
-  void setScreen(String identifire) async {
+  void setScreen(String identifire) {
     Navigator.pop(context);
 
     if (identifire == 'preferences') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
+      Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => Preferences(activeFilters: selectedFilters),
+          builder: (context) => const Preferences(),
         ),
       );
-      setState(() {
-        selectedFilters = result ?? kInitialFilter;
-      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final selectedFilters = ref.watch(filtersProvider);
     final availableMeals = dummyMeals.where((meal) {
       {
         if (selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
