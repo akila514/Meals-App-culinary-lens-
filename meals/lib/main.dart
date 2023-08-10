@@ -20,11 +20,8 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true)
           .copyWith(textTheme: GoogleFonts.poppinsTextTheme()),
-      home: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(color: backgroundColor),
-          child: const WelcomeScreen(),
-        ),
+      home: const Scaffold(
+        body: WelcomeScreen(),
       ),
     );
   }

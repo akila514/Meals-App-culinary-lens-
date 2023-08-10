@@ -36,6 +36,8 @@ class DescriptonScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isFavourite = ref.watch(favouritsMealProvider).contains(meal);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -89,14 +91,20 @@ class DescriptonScreen extends ConsumerWidget {
                             : _showSnackbarForRemovingFromFavourites(
                                 meal, context);
                       },
-                      icon: ref.watch(favouritsMealProvider).contains(meal)
+                      icon: isFavourite
                           ? const Icon(Icons.star, color: Color(0XFFf39c12))
                           : const Icon(Icons.star_outline,
                               color: Color(0XFFf39c12))),
-                  const Text(
-                    'Add to Favourites.',
-                    style: TextStyle(color: regularTextColor, fontSize: 16),
-                  )
+                  isFavourite
+                      ? const Text(
+                          'Already in Favourites.',
+                          style: TextStyle(color: Colors.grey, fontSize: 16),
+                        )
+                      : const Text(
+                          'Add to Favourites.',
+                          style:
+                              TextStyle(color: regularTextColor, fontSize: 16),
+                        )
                 ],
               ),
             ),
